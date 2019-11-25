@@ -15225,6 +15225,18 @@
       return string.match(pattern) || [];
     }
 
+    function windowed(array, size, step) {
+      if (!array) {
+        return [];
+      }
+
+      var finalArray = [];
+      for (var position = 0 ; position + size <= array.length ; position = position + step) {
+        finalArray.push(array.slice(position, position + size));
+      }
+      return finalArray;
+    }
+
     /*------------------------------------------------------------------------*/
 
     /**
@@ -16663,6 +16675,7 @@
     lodash.valuesIn = valuesIn;
     lodash.without = without;
     lodash.words = words;
+    lodash.windowed = windowed
     lodash.wrap = wrap;
     lodash.xor = xor;
     lodash.xorBy = xorBy;

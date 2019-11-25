@@ -25267,6 +25267,48 @@
 
   /*--------------------------------------------------------------------------*/
 
+  QUnit.module('lodash.windowed');
+
+  (function() {
+    QUnit.test('should return empty when array smaller than window size', function(assert) {
+      assert.expect(1);
+
+      assert.deepEqual(_.windowed(['banana'], 2, 1), []);
+    });
+
+    QUnit.test('should return array of one element when array length is equal to window size', function(assert) {
+      assert.expect(1);
+
+      assert.deepEqual(_.windowed(['banana'], 1, 1), [['banana']]);
+    });
+
+    QUnit.test('should return two arrays of one element when array length is two and window size 1', function(assert) {
+      assert.expect(1);
+
+      assert.deepEqual(_.windowed(['banana', 'orange'], 1, 1), [['banana'], ['orange']]);
+    });
+
+    QUnit.test('should return two arrays of two elements when array length is two and window size is two and step is one', function(assert) {
+      assert.expect(1);
+
+      assert.deepEqual(_.windowed(['banana', 'orange', 'strawberry'], 2, 1), [['banana', 'orange'], ['orange', 'strawberry']]);
+    });
+
+    QUnit.test('should return two arrays of two elements when array length is four and window size is two and step is two', function(assert) {
+      assert.expect(1);
+
+      assert.deepEqual(_.windowed(['banana', 'orange', 'strawberry', 'apple'], 2, 2), [['banana', 'orange'], ['strawberry', 'apple']]);
+    });
+
+    QUnit.test('should drop last element if it does not fit into a window', function(assert) {
+      assert.expect(1);
+
+      assert.deepEqual(_.windowed(['banana', 'orange', 'strawberry'], 2, 2), [['banana', 'orange']]);
+    });
+  }());
+
+  /*--------------------------------------------------------------------------*/
+
   QUnit.module('values methods');
 
   lodashStable.each(['values', 'valuesIn'], function(methodName) {
@@ -26822,7 +26864,7 @@
     var acceptFalsey = lodashStable.difference(allMethods, rejectFalsey);
 
     QUnit.test('should accept falsey arguments', function(assert) {
-      assert.expect(316);
+      assert.expect(317);
 
       var arrays = lodashStable.map(falsey, stubArray);
 
